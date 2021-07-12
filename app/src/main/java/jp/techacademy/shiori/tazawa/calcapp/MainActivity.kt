@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_second.*
 import java.lang.Exception
 
-class MainActivity : AppCompatActivity() , View.OnClickListener{
+class MainActivity : AppCompatActivity() , View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,21 +25,34 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
     // ボタンをクリックしたときの処理
     override fun onClick(v: View) {
 
-        try {
+        // 数字が入力されていなかったときにメッセージを出す
+        if (editText1.text.isEmpty() || editText2.text.isEmpty()) {
+            Snackbar.make(findViewById<View>(android.R.id.content), "何か数字を入力してください", Snackbar.LENGTH_LONG)
+                    .show()
+
+        } else if (editText1.text.toString() == "." || editText2.text.toString() == ".") {
+            Snackbar.make(findViewById<View>(android.R.id.content), "数字を入力してください", Snackbar.LENGTH_LONG)
+                    .show()
+
+
+        } else {
 
             // kekkaに結果を格納
             var kekka: Double = 0.0
 
+            val num1 = editText1.text.toString().toDouble()
+            val num2 = editText2.text.toString().toDouble()
+
             // ボタンによって結果を算出する
             when (v.id) {
                 R.id.button1 -> kekka =
-                    (editText1.text.toString().toDouble() + editText2.text.toString().toDouble())
+                        (num1 + num2)
                 R.id.button2 -> kekka =
-                    (editText1.text.toString().toDouble() - editText2.text.toString().toDouble())
+                        (num1 - num2)
                 R.id.button3 -> kekka =
-                    (editText1.text.toString().toDouble() * editText2.text.toString().toDouble())
+                        (num1 * num2)
                 R.id.button4 -> kekka =
-                    (editText1.text.toString().toDouble() / editText2.text.toString().toDouble())
+                        (num1 / num2)
             }
             // Log.d("kotlintest",kekka.toString())
 
@@ -49,17 +62,17 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
             // ボタンによって結果を算出する
             when (v.id) {
                 R.id.button1 -> keisanShiki =
-                    "${editText1.text.toString().toDouble()}" + " + " + "${editText2.text.toString()
-                        .toDouble()}" + " ="
+                        "${editText1.text.toString().toDouble()}" + " + " + "${editText2.text.toString()
+                                .toDouble()}" + " ="
                 R.id.button2 -> keisanShiki =
-                    "${editText1.text.toString().toDouble()}" + " - " + "${editText2.text.toString()
-                        .toDouble()}" + " ="
+                        "${editText1.text.toString().toDouble()}" + " - " + "${editText2.text.toString()
+                                .toDouble()}" + " ="
                 R.id.button3 -> keisanShiki =
-                    "${editText1.text.toString().toDouble()}" + " × " + "${editText2.text.toString()
-                        .toDouble()}" + " ="
+                        "${editText1.text.toString().toDouble()}" + " × " + "${editText2.text.toString()
+                                .toDouble()}" + " ="
                 R.id.button4 -> keisanShiki =
-                    "${editText1.text.toString().toDouble()}" + " ÷ " + "${editText2.text.toString()
-                        .toDouble()}" + " ="
+                        "${editText1.text.toString().toDouble()}" + " ÷ " + "${editText2.text.toString()
+                                .toDouble()}" + " ="
             }
             //Log.d("kotlintest",keisanShiki.toString())
 
@@ -73,15 +86,8 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
 
             startActivity(intent)
 
-        // エラー時の処理
-        } catch (e:Exception) {
-
-             // 数字が入力されていなかったときにメッセージを出す
-             if (editText1.text.isEmpty() || editText2.text.isEmpty()){
-                Snackbar.make(findViewById<View>(android.R.id.content),"何か数字を入力してください",Snackbar.LENGTH_LONG)
-                .show()}
-            //Log.d("kotlintest",e.message.toString())
         }
     }
-
 }
+
+
